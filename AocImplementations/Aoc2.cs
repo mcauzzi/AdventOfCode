@@ -2,6 +2,7 @@ namespace AdventOfCode.AocImplementations;
 
 public class Aoc2 : IAoc<int, int>
 {
+    #region Input
     private string Input = @"A X
 A X
 B Y
@@ -2502,7 +2503,7 @@ C X
 A X
 A X
 A X";
-
+#endregion
     public int RunFirstPart()
     {
         var games = Input.Split("\n");
