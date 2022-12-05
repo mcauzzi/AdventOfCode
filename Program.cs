@@ -1,6 +1,7 @@
 ﻿using AdventOfCode;
 using AdventOfCode.AocImplementations;
 
-IAoc<int,int> a=new Aoc1();
+IAoc<string,string> a=new Aoc5<string,string>();
 Console.WriteLine(a.RunFirstPart());
+ a =new Aoc5<string,string>();
 Console.WriteLine(a.RunSecondPart());
