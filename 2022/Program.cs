@@ -1,7 +1,7 @@
 ﻿using AdventOfCode;
 using AdventOfCode.AocImplementations;
 
-IAoc<int,int> a=new Aoc8();
+IAoc<int,int> a=new Aoc9();
 Console.WriteLine(a.RunFirstPart());
- a =new Aoc8();
+a =new Aoc9();
 Console.WriteLine(a.RunSecondPart());
