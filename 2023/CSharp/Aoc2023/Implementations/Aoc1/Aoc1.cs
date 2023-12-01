@@ -16,47 +16,45 @@ public class Aoc1
         var foundNumbers = new int?[line.Length];
         foreach (var digit in Enum.GetNames(typeof(Digits)))
         {
-            var lastIndex = 0;
-            do
-            {
-                lastIndex = line.IndexOf(digit.ToLower(), lastIndex);
-                if (lastIndex>=0)
-                {
-                    foundNumbers[lastIndex] = (int)Enum.Parse<Digits>(digit);
-                    lastIndex++;
-                }
-            } while (lastIndex>0);
+            FindName(line, digit, foundNumbers);
         }
         foreach (int digit in Enum.GetValues(typeof(Digits)))
         {
-            var lastIndex = 0;
-            do
-            {
-                lastIndex = line.IndexOf(digit.ToString(), lastIndex);
-                if (lastIndex>=0)
-                {
-                    foundNumbers[lastIndex] = (int)Enum.Parse<Digits>(digit.ToString());
-                    lastIndex++;
-                }
-            } while (lastIndex>0);
+            FindDigit(line, digit, foundNumbers);
         }
 
         var digits = foundNumbers.Where(x => x != null).ToArray();
         var res    = digits.First().ToString()+digits.Last().ToString();
         
-        // for (int i = 0; i < digits.Count(); i++)
-        // {
-        //     if (i == 0)
-        //     {
-        //         res += digits[i].ToString();
-        //     }
-        //     else if (i == digits.Length-1)
-        //     {
-        //         res += digits[i].ToString();
-        //     }
-        // }
-        Console.WriteLine($"{line}|{res}");
         return int.Parse(res);
+    }
+
+    private static void FindDigit(string line, int digit, int?[] foundNumbers)
+    {
+        var lastIndex = 0;
+        do
+        {
+            lastIndex = line.IndexOf(digit.ToString(), lastIndex);
+            if (lastIndex >= 0)
+            {
+                foundNumbers[lastIndex] = (int)Enum.Parse<Digits>(digit.ToString());
+                lastIndex++;
+            }
+        } while (lastIndex > 0);
+    }
+
+    private static void FindName(string line, string digit, int?[] foundNumbers)
+    {
+        var lastIndex = 0;
+        do
+        {
+            lastIndex = line.IndexOf(digit.ToLower(), lastIndex);
+            if (lastIndex >= 0)
+            {
+                foundNumbers[lastIndex] = (int)Enum.Parse<Digits>(digit);
+                lastIndex++;
+            }
+        } while (lastIndex > 0);
     }
 
     private string[] Input { get; init; } = File.ReadAllLines("./Aoc1/Input.txt");
