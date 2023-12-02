@@ -11,6 +11,10 @@
       <Content Include="Aoc1\Input.txt">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <None Remove="Aoc2\Input.txt" />
+      <Content Include="Aoc2\Input.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>
