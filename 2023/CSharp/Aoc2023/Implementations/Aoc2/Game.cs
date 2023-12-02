@@ -2,7 +2,7 @@ namespace Implementations.Aoc2;
 
 public class Game
 {
-    public List<CubeSet> Sets { get; private init; }
+    private List<CubeSet> Sets { get;  }
     public int Id { get; private init; }
 
     public Game(string str)

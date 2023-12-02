@@ -4,7 +4,7 @@ namespace Implementations.Aoc2;
 
 public class Aoc2 : IAoc<int, int>
 {
-    public IEnumerable<string> Input { get; } = File.ReadAllLines("./Aoc2/Input.txt");
+    private IEnumerable<string> Input { get; } = File.ReadAllLines("./Aoc2/Input.txt");
 
     public int SolvePart1()
     {
