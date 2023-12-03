@@ -17,4 +17,11 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Aoc3\input.txt" />
+      <Content Include="Aoc3\Input.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>
