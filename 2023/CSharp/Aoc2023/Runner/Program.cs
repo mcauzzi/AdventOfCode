@@ -3,8 +3,9 @@
 using System.Diagnostics;
 using Implementations.Aoc3;
 using Implementations.Aoc4;
+using Implementations.Aoc5;
 
-var aoc =new Aoc4();
+var aoc =new Aoc5();
 var st  = new Stopwatch();
 st.Start();
 Console.WriteLine(aoc.SolvePart1());
