@@ -4,8 +4,9 @@ using System.Diagnostics;
 using Implementations.Aoc3;
 using Implementations.Aoc4;
 using Implementations.Aoc5;
+using Implementations.Aoc6;
 
-var aoc =new Aoc5();
+var aoc =new Aoc6();
 var st  = new Stopwatch();
 st.Start();
 Console.WriteLine(aoc.SolvePart1());
