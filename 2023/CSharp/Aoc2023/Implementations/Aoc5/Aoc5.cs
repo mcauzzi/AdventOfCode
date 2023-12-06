@@ -124,16 +124,7 @@ public class Aoc5 : IAoc<long, long>
         
         return mappedValue;
     }
-
-    private MemoryCache MappedValues = new(new MemoryCacheOptions() { CompactionPercentage = 0.5 });
-
-    private long FindMinInRange(long initialValue, long length, List<Mapping> mappings)
-    {
-        var min = long.MaxValue;
-
-
-        return min;
-    }
+    
 
     private class Map
     {
@@ -161,7 +152,15 @@ public class Aoc5 : IAoc<long, long>
 
         public long Map(long value)
         {
-            var mapper = Maps.FirstOrDefault(x => value >= x.SourceStart && value < x.SourceStart + x.Length);
+            Map? mapper = null;
+            for (var i = 0; i < Maps.Count; i++)
+            {
+                var map = Maps[i];
+                if (value < map.SourceStart || value >= map.SourceStart + map.Length) continue;
+                mapper = map;
+                break;
+            }
+
             if (mapper == null)
             {
                 return value;
