@@ -15,4 +15,17 @@ public static class Extensions
     {
         return !ch.IsAlpha() && !ch.IsNumber();
     }
+    
+    public static long Lcm(this IEnumerable<long> numbers)
+    {
+        return numbers.Aggregate(Lcm);
+    }
+    public static long Lcm(this long a, long b)
+    {
+        return Math.Abs(a * b) / Gcd(a, b);
+    }
+    public static long Gcd(this long a, long b)
+    {
+        return b == 0 ? a : Gcd(b, a % b);
+    }
 }
