@@ -7,8 +7,9 @@ using Implementations.Aoc5;
 using Implementations.Aoc6;
 using Implementations.Aoc7;
 using Implementations.Aoc8;
+using Implementations.Aoc9;
 
-var aoc =new Aoc8();
+var aoc =new Aoc9();
 var st  = new Stopwatch();
 st.Start();
 Console.WriteLine(aoc.SolvePart1());
