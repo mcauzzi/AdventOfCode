@@ -151,21 +151,26 @@ public class Aoc10 : IAoc<int, int>
             }
         } while (outsideCount != 0);
 
-        foreach (var pipe in pipeArray)
-        {
-            if (pipe.PipeType == PipeType.Ground)
-            {
-                if (pipe.Enclosed == null)
-                {
-                    pipe.Enclosed = true;
-                }
-            }
-        }
+        // foreach (var pipe in pipeArray)
+        // {
+        //     if (pipe.PipeType == PipeType.Ground)
+        //     {
+        //         if (pipe.Enclosed == null)
+        //         {
+        //             pipe.Enclosed = true;
+        //         }
+        //     }
+        // }
 
         foreach (var pipe in Pipes)
         {
             Console.WriteLine(string.Join(',',
-                                          pipe.Select(x => x.Distance?.ToString() ?? (x.Enclosed == true ? "IN" :x.Enclosed==null?"UND": "OUT"))
+                                          pipe.Select(x => x.Distance?.ToString() ?? (x.Enclosed switch
+                                                                       {
+                                                                           true => "IN",
+                                                                           null => "UND",
+                                                                           _    => "OUT"
+                                                                       }))
                                               .Select(x => x.PadLeft(3))));
         }
 

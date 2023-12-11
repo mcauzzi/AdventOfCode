@@ -2,6 +2,7 @@
 
 using System.Diagnostics;
 using Implementations.Aoc10;
+using Implementations.Aoc11;
 using Implementations.Aoc3;
 using Implementations.Aoc4;
 using Implementations.Aoc5;
@@ -10,7 +11,7 @@ using Implementations.Aoc7;
 using Implementations.Aoc8;
 using Implementations.Aoc9;
 
-var aoc =new Aoc10();
+var aoc =new Aoc11();
 var st  = new Stopwatch();
 st.Start();
 Console.WriteLine(aoc.SolvePart1());
