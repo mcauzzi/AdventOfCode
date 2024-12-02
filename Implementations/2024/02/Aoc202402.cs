@@ -27,47 +27,6 @@ public class Aoc202402 : IAoc<long, long>
 
         return safeReports;
     }
-
-    private bool IsReportSafe(List<int> report)
-    {
-        bool? isAsc = null;
-        for (int i = 0; i < report.Count; i++)
-        {
-            if (i == 0)
-            {
-                continue;
-            }
-
-            var curr = report[i];
-            var prev    = report[i-1];
-            var diff =Math.Abs(curr-prev);
-            if (diff < 1 || diff > 3)
-            {
-                return false;
-            }
-
-            switch (isAsc)
-            {
-                case null when curr > prev:
-                    isAsc=true;
-                    continue;
-                case null when curr<prev:
-                    isAsc=false;
-                    continue;
-            }
-
-            if(curr>prev && isAsc==false)
-            {
-                return false;
-            }
-            if(curr<prev && isAsc==true)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public long SolvePart2()
     {
         var safeReports = 0;
@@ -103,4 +62,45 @@ public class Aoc202402 : IAoc<long, long>
 
         return false;
     }
+    
+    private bool IsReportSafe(List<int> report)
+    {
+        bool? isAsc = null;
+        for (int i = 0; i < report.Count; i++)
+        {
+            if (i == 0)
+            {
+                continue;
+            }
+
+            var curr = report[i];
+            var prev = report[i-1];
+            var diff =Math.Abs(curr-prev);
+            if (diff < 1 || diff > 3)
+            {
+                return false;
+            }
+
+            switch (isAsc)
+            {
+                case null when curr > prev:
+                    isAsc=true;
+                    continue;
+                case null when curr<prev:
+                    isAsc=false;
+                    continue;
+            }
+
+            if(curr>prev && isAsc==false)
+            {
+                return false;
+            }
+            if(curr<prev && isAsc==true)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

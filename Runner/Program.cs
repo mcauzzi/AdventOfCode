@@ -9,7 +9,6 @@ st.Start();
 Console.WriteLine($"Part 1 Solution:{aoc.SolvePart1()}");
 st.Stop();
 Console.WriteLine($"Time for part 1:{st.ElapsedMilliseconds}ms");
-aoc =new Aoc202402();
 st.Restart();
 Console.WriteLine($"Part 2 Solution:{aoc.SolvePart2()}");
 st.Stop();
