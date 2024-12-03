@@ -1,9 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using System.Diagnostics;
-using Implementations._2024._02;
+using Implementations._2024._03;
 
-var aoc =new Aoc202402();
+var aoc =new Aoc202403();
 var st  = new Stopwatch();
 st.Start();
 Console.WriteLine($"Part 1 Solution:{aoc.SolvePart1()}");
