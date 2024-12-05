@@ -41,26 +41,7 @@ public class Aoc202405:IAoc<long,long>
         return sum;
     }
 
-    private bool RespectsAllRules(List<int> update)
-    {
-        return Rules.All(rule => RespectsRule(update, rule));
-    }
-
-    private static bool RespectsRule(List<int> update, (int First, int Second) rule)
-    {
-        var indexOfFirst  =update.IndexOf(rule.First);
-        var indexOfSecond =update.IndexOf(rule.Second);
-        if(indexOfFirst==-1||indexOfSecond==-1)
-        {
-            return true;
-        }
-        if (indexOfFirst < indexOfSecond)
-        {
-            return true;
-        }
-
-        return false;
-    }
+    
 
     public long SolvePart2()
     {
@@ -91,7 +72,26 @@ public class Aoc202405:IAoc<long,long>
 
         return sum;
     }
+    private bool RespectsAllRules(List<int> update)
+    {
+        return Rules.All(rule => RespectsRule(update, rule));
+    }
 
+    private static bool RespectsRule(List<int> update, (int First, int Second) rule)
+    {
+        var indexOfFirst  =update.IndexOf(rule.First);
+        var indexOfSecond =update.IndexOf(rule.Second);
+        if(indexOfFirst==-1||indexOfSecond==-1)
+        {
+            return true;
+        }
+        if (indexOfFirst < indexOfSecond)
+        {
+            return true;
+        }
+
+        return false;
+    }
     private void Fix(bool recheck, List<int> update)
     {
         while (recheck)
