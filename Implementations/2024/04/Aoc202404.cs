@@ -21,7 +21,9 @@ public class Aoc202404 : IAoc<long, long>
             for (int j = 0; j < currLine.Length; j++)
             {
                 if (currLine[j] != word[0]) continue;
-                wordCount += Enum.GetValues(typeof(Directions)).Cast<Directions>().Count(dir => SearchWord(i, j, word, dir));
+                wordCount += Enum.GetValues(typeof(Directions))
+                                 .Cast<Directions>()
+                                 .Count(dir => SearchWord(i, j, word, dir));
             }
         }
 
@@ -89,23 +91,25 @@ public class Aoc202404 : IAoc<long, long>
 
     public long SolvePart2()
     {
-        var words      = new []{"MAS","SAM"};
+        var words      = new[] { "MAS", "SAM" };
         var crossCount = 0;
         for (int i = 0; i < Input.Length; i++)
         {
             var currLine = Input[i];
             for (int j = 0; j < Input[i].Length; j++)
             {
-               var currChar=currLine[j];
-               if (currChar == 'A')
-               {
-                   var upperLeft  = SearchWord(i-1, j-1, words[0], Directions.DOWNRIGHT)||SearchWord(i-1, j-1, words[1], Directions.DOWNRIGHT);
-                   var upperRight = SearchWord(i-1, j+1, words[0], Directions.DOWNLEFT)||SearchWord(i-1, j+1, words[1], Directions.DOWNLEFT);
-                   if (upperLeft && upperRight)
-                   {
-                       crossCount++;
-                   }
-               }
+                var currChar = currLine[j];
+                if (currChar == 'A')
+                {
+                    var upperLeft = SearchWord(i - 1, j - 1, words[0], Directions.DOWNRIGHT)
+                                 || SearchWord(i - 1, j - 1, words[1], Directions.DOWNRIGHT);
+                    var upperRight = SearchWord(i - 1, j + 1, words[0], Directions.DOWNLEFT)
+                                  || SearchWord(i - 1, j + 1, words[1], Directions.DOWNLEFT);
+                    if (upperLeft && upperRight)
+                    {
+                        crossCount++;
+                    }
+                }
             }
         }
 
