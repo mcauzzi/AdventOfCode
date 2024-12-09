@@ -1,4 +1,5 @@
 using Implementations.Helpers;
+using Implementations.Helpers.Enums;
 
 namespace Implementations._2024._04;
 
@@ -114,17 +115,5 @@ public class Aoc202404 : IAoc<long, long>
         }
 
         return crossCount;
-    }
-
-    private enum Directions
-    {
-        UP,
-        LEFT,
-        RIGHT,
-        DOWN,
-        UPLEFT,
-        UPRIGHT,
-        DOWNLEFT,
-        DOWNRIGHT
     }
 }
