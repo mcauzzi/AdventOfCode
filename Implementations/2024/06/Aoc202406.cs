@@ -27,29 +27,30 @@ public class Aoc202406 : IAoc<int, int>
     {
         LoadInput();
         var guardPos             = GetGuardPosition();
+        var initialGuardPosition = guardPos;
         var currDir              = PossibleMovements[Directions.UP];
-        var patrolPositions      = new HashSet<Vector>();
-        var possibleObstructions = new List<Coordinate>();
+        var patrolPositions      = new HashSet<Coordinate>();
+        var loopsCount           =0;
         while (!guardPos.OutOfBounds(Input[0].Length, Input.Length))
         {
-            patrolPositions.Add((guardPos, currDir));
-            CheckLoop(currDir, guardPos, patrolPositions,possibleObstructions);
+            patrolPositions.Add(guardPos);
             currDir  =  GetNewDirection(guardPos, currDir);
             guardPos += currDir;
         }
 
-        return possibleObstructions.Count();
+        foreach (var pos in patrolPositions.Skip(1))
+        {
+            if (CheckLoop(initialGuardPosition, pos))
+            {
+                loopsCount++;
+            }
+        }
+        return loopsCount;
     }
 
-    private void CheckLoop(Coordinate currDir, Coordinate guardPos, HashSet<Vector> patrolPositions,List<Coordinate> Obstructions)
+    private bool CheckLoop( Coordinate guardPos, Coordinate possibleObstruction)
     {
-        var possibleObstruction = guardPos + currDir;
-        if (possibleObstruction.OutOfBounds(Input[0].Length, Input.Length) 
-         || Input[possibleObstruction.Y][possibleObstruction.X] == Obstacle
-            ||Obstructions.Contains(possibleObstruction))
-        {
-            return;
-        }
+        var currDir=PossibleMovements[Directions.UP];
         Input[possibleObstruction.Y][possibleObstruction.X] = Obstacle;
         var loopDirection=GetNewDirection(guardPos,currDir);
         var loopPosition  = guardPos + loopDirection;
@@ -58,20 +59,14 @@ public class Aoc202406 : IAoc<int, int>
         {
             if (!loopPositions.Add((loopPosition, loopDirection)))
             {
-                Obstructions.Add(possibleObstruction);
                 Input[possibleObstruction.Y][possibleObstruction.X] = '.';
-                return;
-            }
-            if(patrolPositions.Contains((loopPosition, loopDirection)))
-            {
-                Obstructions.Add(possibleObstruction);
-                Input[possibleObstruction.Y][possibleObstruction.X] = '.';
-                return;
+                return true;
             }
             loopDirection =  GetNewDirection(loopPosition, loopDirection);
             loopPosition  += loopDirection;
         }
         Input[possibleObstruction.Y][possibleObstruction.X] = '.';
+        return false;
     }
 
     private void LoadInput()
