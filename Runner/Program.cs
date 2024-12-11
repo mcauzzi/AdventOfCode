@@ -2,8 +2,9 @@
 
 using System.Diagnostics;
 using Implementations._2024._06;
+using Implementations._2024._07;
 
-var aoc =new Aoc202406();
+var aoc =new Aoc202407();
 var st  = new Stopwatch();
 st.Start();
 Console.WriteLine($"Part 1 Solution:{aoc.SolvePart1()}");
