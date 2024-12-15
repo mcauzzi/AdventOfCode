@@ -3,37 +3,34 @@ namespace Implementations._2024._09;
 public class AocFile : IEquatable<AocFile>
 {
     public int          Id            { get; init; }
-    public HashSet<int> BlocksIndexes { get; private set; }
+    public List<int> BlocksIndexes { get; private set; }
 
     public AocFile(int id, int fileStart, int fileSize)
     {
         Id            = id;
-        BlocksIndexes = new HashSet<int>();
+        BlocksIndexes = new List<int>();
         for (var i = fileStart; i < fileStart + fileSize; i++)
         {
             BlocksIndexes.Add(i);
         }
     }
 
-    public void MoveToEarliestFreeSpace(HashSet<int> freeSpaceIndexes)
+    public void MoveToEarliestFreeSpace(List<int> freeSpaceIndexes)
     {
-        var newBlocksIndexes = new HashSet<int>();
-        foreach (var blockIndex in BlocksIndexes.Reverse())
+        var currBlockIndex        = BlocksIndexes.Count-1;
+        for (int i = 0; i < freeSpaceIndexes.Count; i++)
         {
-            var newFreeSpaceIndexEnum = freeSpaceIndexes.Where(x => blockIndex > x);
-            if (newFreeSpaceIndexEnum.Any())
+            var currFreeSpaceBlock=freeSpaceIndexes[i];
+            if(currFreeSpaceBlock<BlocksIndexes[currBlockIndex])
             {
-                newBlocksIndexes.Add(newFreeSpaceIndexEnum.First());
-                freeSpaceIndexes.Remove(newFreeSpaceIndexEnum.First());
-                freeSpaceIndexes.Add(blockIndex);
-            }
-            else
-            {
-                newBlocksIndexes.Add(blockIndex);
+                freeSpaceIndexes[i]=BlocksIndexes[currBlockIndex];
+                BlocksIndexes[currBlockIndex--]=currFreeSpaceBlock;
+                if (currBlockIndex < 0)
+                {
+                    return;
+                }
             }
         }
-
-        BlocksIndexes = newBlocksIndexes.OrderBy(x => x).ToHashSet();
     }
 
     public bool Equals(AocFile? other)
@@ -77,7 +74,7 @@ public class AocFile : IEquatable<AocFile>
                                                      && x.BlocksIndexes.First() < BlocksIndexes.First());
         if (fileDest != null)
         {
-            BlocksIndexes = fileDest.BlocksIndexes.Take(BlocksIndexes.Count).ToHashSet();
+            BlocksIndexes = fileDest.BlocksIndexes.Take(BlocksIndexes.Count).ToList();
             fileDest.RemoveFreeSpace(BlocksIndexes.Count);
         }
     }
