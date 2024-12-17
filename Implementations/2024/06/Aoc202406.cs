@@ -3,7 +3,7 @@ using Implementations.Helpers.Enums;
 
 namespace Implementations._2024._06;
 
-using Vector = (Coordinate Position, Coordinate Direction);
+using Vector = (Coordinate Position, Directions Direction);
 
 public class Aoc202406 : IAoc<int, int>
 {
@@ -11,13 +11,13 @@ public class Aoc202406 : IAoc<int, int>
     {
         LoadInput();
         var guardPos        = GetGuardPosition();
-        var currDir         = PossibleMovements[Directions.UP];
+        var currDir         = Directions.UP;
         var patrolPositions = new List<Coordinate>();
         while (!guardPos.OutOfBounds(Input[0].Length, Input.Length))
         {
             patrolPositions.Add(guardPos);
             currDir  =  GetNewDirection(guardPos, currDir);
-            guardPos += currDir;
+            guardPos += Coordinate.GetDirectionVector(currDir);
         }
 
         return patrolPositions.Distinct().Count();
@@ -28,14 +28,14 @@ public class Aoc202406 : IAoc<int, int>
         LoadInput();
         var guardPos             = GetGuardPosition();
         var initialGuardPosition = guardPos;
-        var currDir              = PossibleMovements[Directions.UP];
+        var currDir              = Directions.UP;
         var patrolPositions      = new HashSet<Coordinate>();
         var loopsCount           =0;
         while (!guardPos.OutOfBounds(Input[0].Length, Input.Length))
         {
             patrolPositions.Add(guardPos);
             currDir  =  GetNewDirection(guardPos, currDir);
-            guardPos += currDir;
+            guardPos += Coordinate.GetDirectionVector(currDir);
         }
 
         foreach (var pos in patrolPositions.Skip(1))
@@ -50,10 +50,10 @@ public class Aoc202406 : IAoc<int, int>
 
     private bool CheckLoop( Coordinate guardPos, Coordinate possibleObstruction)
     {
-        var currDir=PossibleMovements[Directions.UP];
+        var currDir=Directions.UP;
         Input[possibleObstruction.Y][possibleObstruction.X] = Obstacle;
         var loopDirection=GetNewDirection(guardPos,currDir);
-        var loopPosition  = guardPos + loopDirection;
+        var loopPosition  = guardPos + Coordinate.GetDirectionVector(loopDirection);
         var loopPositions = new HashSet<Vector>();
         while (!loopPosition.OutOfBounds(Input[0].Length, Input.Length))
         {
@@ -63,7 +63,7 @@ public class Aoc202406 : IAoc<int, int>
                 return true;
             }
             loopDirection =  GetNewDirection(loopPosition, loopDirection);
-            loopPosition  += loopDirection;
+            loopPosition  += Coordinate.GetDirectionVector(loopDirection);
         }
         Input[possibleObstruction.Y][possibleObstruction.X] = '.';
         return false;
@@ -74,26 +74,26 @@ public class Aoc202406 : IAoc<int, int>
         Input = File.ReadAllLines("2024/06/Input.txt").Select(x => x.ToCharArray()).ToArray();
     }
 
-    private Coordinate GetNewDirection(Coordinate guardPos, Coordinate currDir)
+    private Directions GetNewDirection(Coordinate guardPos, Directions currDir)
     {
-        var newPos = guardPos + currDir;
+        var newPos = guardPos + Coordinate.GetDirectionVector(currDir);
         while (!newPos.OutOfBounds(Input[0].Length, Input.Length) && Input[newPos.Y][newPos.X] == Obstacle)
         {
             currDir = RotateDirection(currDir);
-            newPos  = guardPos + currDir;
+            newPos  = guardPos + Coordinate.GetDirectionVector(currDir);
         }
 
         return currDir;
     }
 
-    private Coordinate RotateDirection(Coordinate currDir)
+    private Directions RotateDirection(Directions currDir)
     {
         return currDir switch
                {
-                   { X: 1, Y : 0 }  => PossibleMovements[Directions.DOWN],
-                   { X: -1, Y: 0 }  => PossibleMovements[Directions.UP],
-                   { X: 0, Y : 1 }  => PossibleMovements[Directions.LEFT],
-                   { X: 0, Y : -1 } => PossibleMovements[Directions.RIGHT],
+                   Directions.RIGHT => Directions.DOWN,
+                   Directions.LEFT  => Directions.UP,
+                   Directions.DOWN  => Directions.LEFT,
+                   Directions.UP    => Directions.RIGHT,
                    _                => throw new ArgumentOutOfRangeException()
                };
     }
@@ -119,11 +119,5 @@ public class Aoc202406 : IAoc<int, int>
     private const char     Guard    = '^';
     private const char     Obstacle = '#';
 
-    private Dictionary<Directions, Coordinate> PossibleMovements = new()
-                                                                   {
-                                                                       { Directions.UP, new(0, -1) },
-                                                                       { Directions.DOWN, new(0, 1) },
-                                                                       { Directions.LEFT, new(-1, 0) },
-                                                                       { Directions.RIGHT, new(1, 0) }
-                                                                   };
+    
 }
