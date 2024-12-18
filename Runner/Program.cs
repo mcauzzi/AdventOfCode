@@ -54,7 +54,7 @@ class Program
 
             var selectedDay = days[dayIndex - 1];
             var solutionType = solutions[selectedYear][selectedDay];
-            ExecuteSolution(solutionType);
+            ExecuteSolution(solutionType, selectedYear, selectedDay);
         }
     }
 
@@ -91,11 +91,15 @@ class Program
         return solutions[latestYear][latestDay];
     }
 
-    static void ExecuteSolution(Type solutionType)
+    static void ExecuteSolution(Type solutionType, int year = 0, int day = 0)
     {
         try
         {
-            var solutionInstance = Activator.CreateInstance(solutionType);
+            var inputFilePath = $"Implementations/{year}/Inputs/Aoc{day}.txt";
+            var inputUrl = $"https://adventofcode.com/{year}/day/{day}/input";
+            var input = FileLoader.GetInput(inputFilePath, inputUrl);
+
+            var solutionInstance = Activator.CreateInstance(solutionType, new object[] { input });
             var runFirstPartMethod = solutionType.GetMethod("SolvePart1");
             var runSecondPartMethod = solutionType.GetMethod("SolvePart2");
 
