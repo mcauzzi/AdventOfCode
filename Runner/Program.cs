@@ -1,63 +1,67 @@
-﻿// See https://aka.ms/new-console-template for more information
-
+﻿using System.Reflection;
 using System.Diagnostics;
-using Implementations._2024._08;
-using Implementations._2024._09;
-using Implementations.Helpers;
+using AdventOfCode;
+using Aoc2024._01;
 
- var solutions = LoadSolutions();
-while (true)
+class Program
 {
-    Console.WriteLine("Select a year:");
-    var years = solutions.Keys.OrderBy(y => y).ToList();
-    for (int i = 0; i < years.Count; i++)
+    static void Main(string[] args)
     {
-        Console.WriteLine($"{i + 1}. {years[i]}");
-    }
-    Console.WriteLine($"{years.Count + 1}. Run latest solution");
-
-    if (!int.TryParse(Console.ReadLine(), out var yearIndex) || yearIndex < 1 || yearIndex > years.Count + 1)
-    {
-        Console.WriteLine("Invalid selection. Please try again.");
-        continue;
-    }
-
-    if (yearIndex == years.Count + 1)
-    {
-        var latestSolution = GetLatestSolution(solutions);
-        if (latestSolution != null)
+        var solutions = LoadSolutions();
+        while (true)
         {
-            ExecuteSolution(latestSolution);
+            Console.WriteLine("Select a year:");
+            var years = solutions.Keys.Orderby(y => y).ToList();
+            for (int i = 0; i < years.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {years[i]}");
+            }
+            Console.WriteLine($"{years.Count + 1}. Run latest solution");
+
+            if (!int.TryParse(Console.ReadLine(), out var yearIndex) || yearIndex < 1 || yearIndex > years.Count + 1)
+            {
+                Console.WriteLine("Invalid selection. Please try again.");
+                continue;
+            }
+
+            if (yearIndex == years.Count + 1)
+            {
+                var latestSolution = GetLatestSolution(solutions);
+                if (latestSolution != null)
+                {
+                    ExecuteSolution(latestSolution);
+                }
+                else
+                {
+                    Console.WriteLine("No solutions found.");
+                }
+                continue;
+            }
+
+            var selectedYear = years[yearIndex - 1];
+            var days = solutions[selectedYear].Keys.OrderBy(d => d).ToList();
+            Console.WriteLine("Select a day:");
+            for (int i = 0; i < days.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. Day {days[i]}");
+            }
+
+            if (!int.TryParse(Console.ReadLine(), out var dayIndex) || dayIndex < 1 || dayIndex > days.Count)
+            {
+                Console.WriteLine("Invalid selection. Please try again.");
+                continue;
+            }
+
+            var selectedDay = days[dayIndex - 1];
+            var solutionType = solutions[selectedYear][selectedDay];
+            ExecuteSolution(solutionType);
         }
-        else
-        {
-            Console.WriteLine("No solutions found.");
-        }
-        continue;
     }
 
-    var selectedYear = years[yearIndex - 1];
-    var days = solutions[selectedYear].Keys.OrderBy(d => d).ToList();
-    Console.WriteLine("Select a day:");
-    for (int i = 0; i < days.Count; i++)
-    {
-        Console.WriteLine($"{i + 1}. Day {days[i]}");
-    }
-
-    if (!int.TryParse(Console.ReadLine(), out var dayIndex) || dayIndex < 1 || dayIndex > days.Count)
-    {
-        Console.WriteLine("Invalid selection. Please try again.");
-        continue;
-    }
-
-    var selectedDay = days[dayIndex - 1];
-    var solutionType = solutions[selectedYear][selectedDay];
-    ExecuteSolution(solutionType);
-}
- static Dictionary<int, Dictionary<int, Type>> LoadSolutions()
+    static Dictionary<int, Dictionary<int, Type>> LoadSolutions()
     {
         var solutions = new Dictionary<int, Dictionary<int, Type>>();
-        var assemblies = new[] { Assembly.GetExecutingAssembly(), Assembly.Load("Implementations") };
+        var assemblies = new[] { Assembly.GetExecutingAssembly(), Assembly.Load("AdventOfCode") };
 
         foreach (var assembly in assemblies)
         {
@@ -116,3 +120,4 @@ while (true)
             Console.WriteLine($"An error occurred while executing the solution: {ex.Message}");
         }
     }
+}
