@@ -1,18 +1,118 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using System.Diagnostics;
-using Implementations._2024._06;
 using Implementations._2024._08;
 using Implementations._2024._09;
-using Implementations._2024._10;
+using Implementations.Helpers;
 
-var aoc =new Aoc202410();
-var st  = new Stopwatch();
-st.Start();
-Console.WriteLine($"Part 1 Solution:{aoc.SolvePart1()}");
-st.Stop();
-Console.WriteLine($"Time for part 1:{st.ElapsedMilliseconds}ms");
-st.Restart();
-Console.WriteLine($"Part 2 Solution:{aoc.SolvePart2()}");
-st.Stop();
-Console.WriteLine($"Time for part 2:{st.ElapsedMilliseconds}ms");
+ var solutions = LoadSolutions();
+while (true)
+{
+    Console.WriteLine("Select a year:");
+    var years = solutions.Keys.OrderBy(y => y).ToList();
+    for (int i = 0; i < years.Count; i++)
+    {
+        Console.WriteLine($"{i + 1}. {years[i]}");
+    }
+    Console.WriteLine($"{years.Count + 1}. Run latest solution");
+
+    if (!int.TryParse(Console.ReadLine(), out var yearIndex) || yearIndex < 1 || yearIndex > years.Count + 1)
+    {
+        Console.WriteLine("Invalid selection. Please try again.");
+        continue;
+    }
+
+    if (yearIndex == years.Count + 1)
+    {
+        var latestSolution = GetLatestSolution(solutions);
+        if (latestSolution != null)
+        {
+            ExecuteSolution(latestSolution);
+        }
+        else
+        {
+            Console.WriteLine("No solutions found.");
+        }
+        continue;
+    }
+
+    var selectedYear = years[yearIndex - 1];
+    var days = solutions[selectedYear].Keys.OrderBy(d => d).ToList();
+    Console.WriteLine("Select a day:");
+    for (int i = 0; i < days.Count; i++)
+    {
+        Console.WriteLine($"{i + 1}. Day {days[i]}");
+    }
+
+    if (!int.TryParse(Console.ReadLine(), out var dayIndex) || dayIndex < 1 || dayIndex > days.Count)
+    {
+        Console.WriteLine("Invalid selection. Please try again.");
+        continue;
+    }
+
+    var selectedDay = days[dayIndex - 1];
+    var solutionType = solutions[selectedYear][selectedDay];
+    ExecuteSolution(solutionType);
+}
+ static Dictionary<int, Dictionary<int, Type>> LoadSolutions()
+    {
+        var solutions = new Dictionary<int, Dictionary<int, Type>>();
+        var assemblies = new[] { Assembly.GetExecutingAssembly(), Assembly.Load("Implementations") };
+
+        foreach (var assembly in assemblies)
+        {
+            var types = assembly.GetTypes().Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IAoc<,>)));
+            foreach (var type in types)
+            {
+                var year = int.Parse(type.Namespace?.Split('.').Last().Substring(0, 4) ?? "0");
+                var day = int.Parse(type.Name.Substring(3, type.Name.Length - 3));
+
+                if (!solutions.ContainsKey(year))
+                {
+                    solutions[year] = new Dictionary<int, Type>();
+                }
+
+                solutions[year][day] = type;
+            }
+        }
+
+        return solutions;
+    }
+
+    static Type GetLatestSolution(Dictionary<int, Dictionary<int, Type>> solutions)
+    {
+        var latestYear = solutions.Keys.Max();
+        var latestDay = solutions[latestYear].Keys.Max();
+        return solutions[latestYear][latestDay];
+    }
+
+    static void ExecuteSolution(Type solutionType)
+    {
+        try
+        {
+            var solutionInstance = Activator.CreateInstance(solutionType);
+            var runFirstPartMethod = solutionType.GetMethod("RunFirstPart");
+            var runSecondPartMethod = solutionType.GetMethod("RunSecondPart");
+
+            if (runFirstPartMethod != null && runSecondPartMethod != null)
+            {
+                var stopwatch = Stopwatch.StartNew();
+                var firstPartResult = runFirstPartMethod.Invoke(solutionInstance, null);
+                stopwatch.Stop();
+                Console.WriteLine($"Part 1: {firstPartResult} (Execution Time: {stopwatch.ElapsedMilliseconds} ms)");
+
+                stopwatch.Restart();
+                var secondPartResult = runSecondPartMethod.Invoke(solutionInstance, null);
+                stopwatch.Stop();
+                Console.WriteLine($"Part 2: {secondPartResult} (Execution Time: {stopwatch.ElapsedMilliseconds} ms)");
+            }
+            else
+            {
+                Console.WriteLine("The selected solution does not have the required methods.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred while executing the solution: {ex.Message}");
+        }
+    }
