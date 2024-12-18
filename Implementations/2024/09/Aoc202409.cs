@@ -4,21 +4,21 @@ namespace Implementations._2024._09;
 
 public class Aoc202409 : IAoc<long, long>
 {
-    public Aoc202409()
+    public Aoc202409(char[][] input):base(input)
     {
-        Input = File.ReadAllLines("2024/09/Input.txt").First();
+        Line = new string(input[0]);
     }
 
-    public string Input { get; set; }
+    public string Line { get; set; }
 
-    public long SolvePart1()
+    public override long SolvePart1()
     {
         var currentFileId = 0;
         var files         = new HashSet<AocFile>();
         var freeSpaceMap  = new List<AocFreeSpace>();
-        for (int i = 0, currDiskIndex = 0; i < Input.Length; i++)
+        for (int i = 0, currDiskIndex = 0; i < Line.Length; i++)
         {
-            var currNumber = int.Parse(Input[i].ToString());
+            var currNumber = int.Parse(Line[i].ToString());
             if (i % 2 == 0)
             {
                 files.Add(new(currentFileId++, currDiskIndex, currNumber));
@@ -40,15 +40,15 @@ public class Aoc202409 : IAoc<long, long>
         return files.Sum(file => file.BlocksIndexes.Sum(x => (long)x * file.Id));
     }
 
-    public long SolvePart2()
+    public override long SolvePart2()
     {
         var currentFileId      = 0;
         var currentFreeSpaceId = 0;
         var fileMap            = new HashSet<AocFile>();
         var freeSpaceMap       = new List<AocFreeSpace>();
-        for (int i = 0, currDiskIndex = 0; i < Input.Length; i++)
+        for (int i = 0, currDiskIndex = 0; i < Line.Length; i++)
         {
-            var currNumber = int.Parse(Input[i].ToString());
+            var currNumber = int.Parse(Line[i].ToString());
             if (i % 2 == 0)
             {
                 fileMap.Add(new(currentFileId++, currDiskIndex, currNumber));

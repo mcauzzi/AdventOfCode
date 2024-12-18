@@ -4,12 +4,16 @@ namespace Implementations._2023.Aoc4;
 
 public class Aoc4 : IAoc<int, int>
 {
-    private string[] Input { get; } = File.ReadAllLines("./Aoc4/Input.txt");
+    public Aoc4(char[][] input) : base(input)
+    {
+        InputAsStrings = input.Select(x => new string(x)).ToArray();
+    }
+    private string[] InputAsStrings { get; }
 
-    public int SolvePart1()
+    public override int SolvePart1()
     {
         var totalSum = 0;
-        foreach (var line in Input)
+        foreach (var line in InputAsStrings)
         {
             var firstSplit  = line.Split(':');
             var cardName    = firstSplit[0];
@@ -26,9 +30,9 @@ public class Aoc4 : IAoc<int, int>
         return totalSum;
     }
 
-    public int SolvePart2()
+    public override int SolvePart2()
     {
-        var startingInput = Input.Select(x => new BingoGame(int.Parse(x.Split(':')[0].Split(' ')
+        var startingInput = InputAsStrings.Select(x => new BingoGame(int.Parse(x.Split(':')[0].Split(' ')
                                                                        .Where(x => !string.IsNullOrEmpty(x)).ToList()[1]
                                                                        .Trim()),
                                                             x.Split(':')[1].Split('|')[0].Trim()

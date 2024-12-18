@@ -2,12 +2,11 @@ using Implementations.Helpers;
 
 namespace Implementations._2023.Aoc11;
 
-public class Aoc11 : IAoc<double, double>
+public class Aoc11(char[][] input) : IAoc<double, double>(input)
 {
-    private char[][] Input { get; set; } =
-        File.ReadAllLines("./Aoc11/Input.txt").Select(x => x.Select(x => x).ToArray()).ToArray();
+   
 
-    public double SolvePart1()
+    public override double SolvePart1()
     {
         Dictionary<(Galaxy, Galaxy), double> distances  = new();
 
@@ -39,7 +38,7 @@ public class Aoc11 : IAoc<double, double>
     }
 
 
-    public double SolvePart2()
+    public override double SolvePart2()
     {
         Dictionary<(Galaxy, Galaxy), double> distances  = new();
         var galaxies = Input.SelectMany((x, row) => x.Select((x, col) => new { col, row, val = x })

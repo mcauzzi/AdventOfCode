@@ -4,24 +4,24 @@ namespace Implementations._2023.Aoc1;
 
 public class Aoc1 : IAoc<int, long>
 {
-    private string[] Input { get; }
-
-    public Aoc1(string[] input)
+    public Aoc1(char[][] input):base(input)
     {
-        Input = input;
+        InputAsStrings = input.Select(x => new string(x)).ToArray();
     }
 
-    public int SolvePart1()
+    public string[] InputAsStrings { get; set; }
+
+    public override int SolvePart1()
     {
         var res = 0;
-        res += Input.Select(GetLineNumber).Sum();
+        res += InputAsStrings.Select(GetLineNumber).Sum();
         return res;
     }
 
-    public long SolvePart2()
+    public override long SolvePart2()
     {
         var res = 0L;
-        res += Input.Select(GetLineNumber).Sum();
+        res += InputAsStrings.Select(GetLineNumber).Sum();
         return res;
     }
 
