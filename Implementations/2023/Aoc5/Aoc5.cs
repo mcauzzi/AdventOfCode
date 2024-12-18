@@ -4,15 +4,19 @@ namespace Implementations._2023.Aoc5;
 
 public class Aoc5 : IAoc<long, long>
 {
-    private string[] Input { get; } = File.ReadAllLines("./Aoc5/Input.txt");
-
-    public long SolvePart1()
+    public Aoc5(char[][] input) : base(input)
     {
-        var seeds = Input[0][(Input[0].IndexOf(':') + 1)..]
+        InputAsStrings = input.Select(x => new string(x)).ToArray();
+    }
+
+    private string[] InputAsStrings { get; }
+    public override long SolvePart1()
+    {
+        var seeds = InputAsStrings[0][(InputAsStrings[0].IndexOf(':') + 1)..]
                     .Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => long.Parse(x))
                     .ToList();
-        List<Mapping> mappings  = ParseInput(Input.Skip(1));
+        List<Mapping> mappings  = ParseInput(InputAsStrings.Skip(1));
         var           locations = new List<long>();
         foreach (var seed in seeds)
         {
@@ -52,13 +56,13 @@ public class Aoc5 : IAoc<long, long>
         return res;
     }
 
-    public long SolvePart2()
+    public override long SolvePart2()
     {
-        var seedsRanges = Input[0][(Input[0].IndexOf(':') + 1)..]
+        var seedsRanges = InputAsStrings[0][(InputAsStrings[0].IndexOf(':') + 1)..]
                           .Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
                           .Select(x => long.Parse(x))
                           .ToList();
-        var mappings = ParseInput(Input.Skip(1));
+        var mappings = ParseInput(InputAsStrings.Skip(1));
         var minimums = new List<long>();
         for (int i = 0; i < seedsRanges.Count; i += 2)
         {

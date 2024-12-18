@@ -14,7 +14,7 @@ public static class FileLoader
         var response = client.GetAsync(url).Result;
         response.EnsureSuccessStatusCode();
         var content = response.Content.ReadAsStringAsync().Result;
-        return content.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        return content.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries);
     }
 
     public static string[] GetInput(string path, string url)
@@ -23,11 +23,9 @@ public static class FileLoader
         {
             return LoadFile(path);
         }
-        else
-        {
-            var sessionCookie = GetSessionCookie();
-            return DownloadFile(url, sessionCookie);
-        }
+
+        var sessionCookie = GetSessionCookie();
+        return DownloadFile(url, sessionCookie);
     }
 
     private static string GetSessionCookie()

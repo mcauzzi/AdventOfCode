@@ -5,28 +5,27 @@ namespace Implementations._2024._05;
 
 public class Aoc202405:IAoc<long,long>
 {
-    public Aoc202405()
+    public Aoc202405(char[][] input):base(input)
     {
-        var input = File.ReadAllLines("2024/05/Input.txt").Select(x=>x.Trim()).ToArray();
         var i     = 0;
-        while (!string.IsNullOrEmpty(input[i]))
+        var inputAsString= input.Select(x=>new string(x)).ToArray();
+        while (!string.IsNullOrEmpty(inputAsString[i]))
         {
-            var split = input[i].Split("|");
-            Rules.Add((int.Parse(split[0]),int.Parse(split[1])));
+            var split = inputAsString[i].Split("|");
+            Rules.Add((int.Parse(inputAsString[0]),int.Parse(inputAsString[1])));
             i++;
         }
         Rules=Rules.OrderBy(x=>x.First).ToList();
         i++;
         while (i<input.Length)
         {
-            var update = input[i].Split(',').Select(int.Parse).ToList();
+            var update = inputAsString[i].Split(',').Select(int.Parse).ToList();
             Updates.Add(update);
             i++;
         }
     }
-
     
-    public long SolvePart1()
+    public override long SolvePart1()
     {
         var sum = 0L;
         foreach (var update in Updates)
@@ -43,7 +42,7 @@ public class Aoc202405:IAoc<long,long>
 
     
 
-    public long SolvePart2()
+    public override long SolvePart2()
     {
         var sum = 0L;
         foreach (var update in Updates)

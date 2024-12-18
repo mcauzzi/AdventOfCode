@@ -3,9 +3,9 @@ using System.Diagnostics;
 using Implementations;
 using Implementations.Helpers;
 
-class Program
+internal class Program
 {
-    static void Main(string[] args)
+    private static void Main(string[] args)
     {
         var solutions = LoadSolutions();
         while (true)
@@ -58,7 +58,7 @@ class Program
         }
     }
 
-    static Dictionary<int, Dictionary<int, Type>> LoadSolutions()
+    private static Dictionary<int, Dictionary<int, Type>> LoadSolutions()
     {
         var solutions = new Dictionary<int, Dictionary<int, Type>>();
         var assemblies = new[] { Assembly.GetExecutingAssembly(), Assembly.Load("Implementations") };
@@ -84,14 +84,14 @@ class Program
         return solutions;
     }
 
-    static Type GetLatestSolution(Dictionary<int, Dictionary<int, Type>> solutions)
+    private static Type GetLatestSolution(Dictionary<int, Dictionary<int, Type>> solutions)
     {
         var latestYear = solutions.Keys.Max();
         var latestDay = solutions[latestYear].Keys.Max();
         return solutions[latestYear][latestDay];
     }
 
-    static void ExecuteSolution(Type solutionType, int year = 0, int day = 0)
+    private static void ExecuteSolution(Type solutionType, int year = 0, int day = 0)
     {
         try
         {

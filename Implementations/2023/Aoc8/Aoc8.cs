@@ -4,12 +4,17 @@ namespace Implementations._2023.Aoc8;
 
 public class Aoc8 : IAoc<int, long>
 {
-    private string[] Input { get; } = File.ReadAllLines("./Aoc8/Input.txt");
-
-    public int SolvePart1()
+    public Aoc8(char[][] input) : base(input)
     {
-        var instructions = new Instructions(Input[0]);
-        var map          = new Map(Input.Skip(2));
+        InputAsStrings=input.Select(x=>new string(x)).ToArray();
+    }
+
+    private string[] InputAsStrings { get; }
+
+    public override int SolvePart1()
+    {
+        var instructions = new Instructions(InputAsStrings[0]);
+        var map          = new Map(InputAsStrings.Skip(2));
         var currentPos   = "AAA";
         var steps        = 0;
         while (currentPos != "ZZZ")
@@ -23,11 +28,11 @@ public class Aoc8 : IAoc<int, long>
         return steps;
     }
 
-    public long SolvePart2()
+    public override long SolvePart2()
     {
-        var map              = new Map(Input.Skip(2));
+        var map              = new Map(InputAsStrings.Skip(2));
         var currentPositions = map.GetAllStartingPositions();
-        var instructionsSet  = Enumerable.Range(0, currentPositions.Length).Select(x => new Instructions(Input[0])).ToArray();
+        var instructionsSet  = Enumerable.Range(0, currentPositions.Length).Select(x => new Instructions(InputAsStrings[0])).ToArray();
         var currentSteps =Enumerable.Range(0, currentPositions.Length).Select(x => 0L).ToList();
         var loopsList = new List<List<string>>();
         for (int i = 0; i < currentPositions.Length; i++)

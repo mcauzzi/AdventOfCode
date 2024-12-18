@@ -2,16 +2,9 @@ using Implementations.Helpers;
 
 namespace Implementations._2024._08;
 
-public class Aoc202408 : IAoc<long, long>
+public class Aoc202408(char[][] input) : IAoc<long, long>(input)
 {
-    public Aoc202408()
-    {
-        Input = File.ReadAllLines("2024/08/Input.txt");
-    }
-
-    public string[] Input { get; set; }
-
-    public long SolvePart1()
+    public override long SolvePart1()
     {
         var antennas = new Dictionary<char, List<Coordinate>>();
         GetAntennas(antennas);
@@ -40,7 +33,7 @@ public class Aoc202408 : IAoc<long, long>
         return antiNodes.Count(x => !x.OutOfBounds(Input[0].Length, Input.Length));
     }
 
-    public long SolvePart2()
+    public override long SolvePart2()
     {
         var antennas = new Dictionary<char, List<Coordinate>>();
         GetAntennas(antennas);

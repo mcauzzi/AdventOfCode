@@ -4,23 +4,23 @@ namespace Implementations._2023.Aoc13;
 
 public class Aoc13:IAoc<long,long>
 {
-    public Aoc13()
+    public Aoc13(char[][] input):base(input)
     {
-        var inputStrings=File.ReadAllLines("./Aoc13/Input.txt");
+        var inputStrings=input.Select(x=>new string(x)).ToArray();
         for (int i = 0; i < inputStrings.Length;)
         {
             var pattern = inputStrings.Skip(i).TakeWhile(x => x != "").Select(str=>str.Select(ch=>ch).ToArray()).ToArray();
-            Input.Add(pattern);
+            InputPattern.Add(pattern);
             i += pattern.Length+1;
         }
         
     }
 
-    private List<char[][]> Input { get; } = new();
-    public long SolvePart1()
+    private List<char[][]> InputPattern { get; } = new();
+    public override long SolvePart1()
     {
         var totalSum     = 0;
-        foreach (var pattern in Input)
+        foreach (var pattern in InputPattern)
         {
             for (int l = 0, r = 1; l < pattern[0].Length-1; l++, r++)
             {
@@ -94,7 +94,7 @@ public class Aoc13:IAoc<long,long>
         return true;
     }
 
-    public long SolvePart2()
+    public override long SolvePart2()
     {
         return 0;
     }

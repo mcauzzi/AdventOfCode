@@ -4,9 +4,9 @@ namespace Implementations._2024._02;
 
 public class Aoc202402 : IAoc<long, long>
 {
-    public Aoc202402()
+    public Aoc202402(char[][] input) : base(input)
     {
-        Reports = File.ReadAllLines("2024/02/Input.txt")
+        Reports = Input.Select(x=>new string(x))
                       .Select(x => x.Split(' ', StringSplitOptions.RemoveEmptyEntries))
                       .Select(x=>x.Select(int.Parse).ToList())
                       .ToList();
@@ -14,7 +14,7 @@ public class Aoc202402 : IAoc<long, long>
 
     public List<List<int>> Reports { get; set; }
 
-    public long SolvePart1()
+    public override long SolvePart1()
     {
         var safeReports = 0;
         foreach (var report in Reports)
@@ -27,7 +27,7 @@ public class Aoc202402 : IAoc<long, long>
 
         return safeReports;
     }
-    public long SolvePart2()
+    public override long SolvePart2()
     {
         var safeReports = 0;
         foreach (var report in Reports)

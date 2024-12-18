@@ -5,11 +5,10 @@ namespace Implementations._2024._06;
 
 using Vector = (Coordinate Position, Coordinate Direction);
 
-public class Aoc202406 : IAoc<int, int>
+public class Aoc202406(char[][] input) : IAoc<int, int>(input)
 {
-    public int SolvePart1()
+    public override int SolvePart1()
     {
-        LoadInput();
         var guardPos        = GetGuardPosition();
         var currDir         = PossibleMovements[Directions.UP];
         var patrolPositions = new List<Coordinate>();
@@ -23,9 +22,8 @@ public class Aoc202406 : IAoc<int, int>
         return patrolPositions.Distinct().Count();
     }
 
-    public int SolvePart2()
+    public override int SolvePart2()
     {
-        LoadInput();
         var guardPos             = GetGuardPosition();
         var initialGuardPosition = guardPos;
         var currDir              = PossibleMovements[Directions.UP];
@@ -67,11 +65,6 @@ public class Aoc202406 : IAoc<int, int>
         }
         Input[possibleObstruction.Y][possibleObstruction.X] = '.';
         return false;
-    }
-
-    private void LoadInput()
-    {
-        Input = File.ReadAllLines("2024/06/Input.txt").Select(x => x.ToCharArray()).ToArray();
     }
 
     private Coordinate GetNewDirection(Coordinate guardPos, Coordinate currDir)

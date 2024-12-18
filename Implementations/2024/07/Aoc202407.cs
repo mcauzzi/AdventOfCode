@@ -4,9 +4,9 @@ namespace Implementations._2024._07;
 
 public class Aoc202407 : IAoc<long, long>
 {
-    public Aoc202407()
+    public Aoc202407(char[][] input):base(input)
     {
-        Equations = File.ReadAllLines("2024/07/Input.txt")
+        Equations = Input.Select(x=>new string(x))
                         .Select(x => x.Trim())
                         .Select(x => new Equation()
                                      {
@@ -18,7 +18,7 @@ public class Aoc202407 : IAoc<long, long>
 
     public List<Equation> Equations { get; set; }
 
-    public long SolvePart1()
+    public override long SolvePart1()
     {
         var waitAllTask = Task.WhenAll(Equations.Select(x => x.HasSolution()));
         while (!waitAllTask.IsCompleted)
@@ -30,7 +30,7 @@ public class Aoc202407 : IAoc<long, long>
         return completedEqs.Sum(x => x.ExpectedResult);
     }
 
-    public long SolvePart2()
+    public override long SolvePart2()
     {
         foreach (var eq in Equations)
         {
