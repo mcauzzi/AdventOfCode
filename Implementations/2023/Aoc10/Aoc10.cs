@@ -4,11 +4,11 @@ namespace Implementations._2023.Aoc10;
 
 public class Aoc10 : IAoc<int, int>
 {
-    public Aoc10()
+    public Aoc10(char [][] input) : base(input)
     {
-        Pipes = File.ReadAllLines("./Aoc10/Input.txt")
-                    .Select((x, row) => x.Select((y, col) => new Pipe(y, row, col)).ToArray())
-                    .ToArray();
+        Pipes = input
+                .Select((x, row) => x.Select((y, col) => new Pipe(y, row, col)).ToArray())
+                .ToArray();
         foreach (var pipeline in Pipes)
         {
             foreach (var pipe in pipeline)
@@ -24,7 +24,7 @@ public class Aoc10 : IAoc<int, int>
 
     private Pipe[][] Pipes { get; }
 
-    public int SolvePart1()
+    public override int SolvePart1()
     {
         var currentPipe = FindStart();
         var pipeArray   = Pipes.SelectMany(x => x.Select(x => x)).ToArray();
@@ -119,7 +119,7 @@ public class Aoc10 : IAoc<int, int>
         throw new Exception();
     }
 
-    public int SolvePart2()
+    public override int SolvePart2()
     {
         var currentPipe = FindStart();
         var pipeArray   = Pipes.SelectMany(x => x.Select(x => x)).ToArray();

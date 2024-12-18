@@ -4,16 +4,21 @@ namespace Implementations._2023.Aoc12;
 
 public class Aoc12 : IAoc<long, long>
 {
-    private string[] Input { get; } = File.ReadAllLines("./Aoc12/Input.txt");
-
-    public long SolvePart1()
+    public Aoc12(char[][] input) : base(input)
     {
-        var conditions = Input.Select(x => x.Split(' ', StringSplitOptions.TrimEntries))
+        InputAsStrings = input.Select(x => new string(x)).ToArray();
+    }
+
+    private string[] InputAsStrings { get; }
+
+    public override long SolvePart1()
+    {
+        var conditions = InputAsStrings.Select(x => x.Split(' ', StringSplitOptions.TrimEntries))
                               .Select(x => new ConditionRecord(x[0], x[1]));
         return conditions.Select(x => x.CalculatePossibilities()).Sum();
     }
 
-    public long SolvePart2()
+    public override long SolvePart2()
     {
         return 0;
     }

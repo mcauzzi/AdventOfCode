@@ -4,17 +4,22 @@ namespace Implementations._2023.Aoc7;
 
 public class Aoc7 : IAoc<int, int>
 {
-    private string[] Input { get; } = File.ReadAllLines("./Aoc7/Input.txt");
-
-    public int SolvePart1()
+    public Aoc7(char[][] input) : base(input)
     {
-        var game = new Game(Input);
+        InputAsStrings=input.Select(x=>new string(x)).ToArray();
+    }
+
+    private string[] InputAsStrings { get; }
+
+    public override int SolvePart1()
+    {
+        var game = new Game(InputAsStrings);
         return game.TotalPower;
     }
 
-    public int SolvePart2()
+    public override int SolvePart2()
     {
-        var game = new GameWithJokers(Input);
+        var game = new GameWithJokers(InputAsStrings);
         return game.TotalPower;
     }
 }

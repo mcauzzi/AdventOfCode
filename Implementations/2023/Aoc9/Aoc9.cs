@@ -4,11 +4,16 @@ namespace Implementations._2023.Aoc9;
 
 public class Aoc9 : IAoc<long, long>
 {
-    private string[] Input { get; } = File.ReadAllLines("./Aoc9/Input.txt");
-
-    public long SolvePart1()
+    public Aoc9(char[][] input) : base(input)
     {
-        var numberArrays = Input.Select(x => x.Split(' ', StringSplitOptions.TrimEntries))
+        InputAsStrings=input.Select(x=>new string(x)).ToArray();
+    }
+
+    private string[] InputAsStrings { get; }
+
+    public override long SolvePart1()
+    {
+        var numberArrays = InputAsStrings.Select(x => x.Split(' ', StringSplitOptions.TrimEntries))
                                 .Select(x => x.Select(int.Parse).ToList()).ToList();
         return numberArrays.Select(x=>x.Last()+GetNextNumber(x)).Sum();
     }
@@ -32,9 +37,9 @@ public class Aoc9 : IAoc<long, long>
         return diffList.Last() + GetNextNumber(diffList);
     }
 
-    public long SolvePart2()
+    public override long SolvePart2()
     {
-        var numbersLists = Input.Select(x => x.Split(' ', StringSplitOptions.TrimEntries))
+        var numbersLists = InputAsStrings.Select(x => x.Split(' ', StringSplitOptions.TrimEntries))
                                 .Select(x => x.Select(int.Parse).ToList()).ToList();
         foreach (var list in numbersLists)
         {

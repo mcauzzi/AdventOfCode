@@ -4,14 +4,18 @@ namespace Implementations._2023.Aoc3;
 
 public class Aoc3 : IAoc<int, int>
 {
-    private string[] Input { get; } = File.ReadAllLines("./Aoc3/Input.txt");
+    public Aoc3(char[][] input) : base(input)
+    {
+        InputAsStrings = input.Select(x => new string(x)).ToArray();
+    }
+    private string[] InputAsStrings          { get; }
 
-    public int SolvePart1()
+    public override int SolvePart1()
     {
         var sum = 0;
-        for (var i = 0; i < Input.Length; i++)
+        for (var i = 0; i < InputAsStrings.Length; i++)
         {
-            var line          = Input[i];
+            var line          = InputAsStrings[i];
             var currentNumber = "";
             var shouldSum     = false;
             for (var j = 0; j < line.Length; j++)
@@ -46,12 +50,12 @@ public class Aoc3 : IAoc<int, int>
         return sum;
     }
 
-    public int SolvePart2()
+    public override int SolvePart2()
     {
         var gearDict = new Dictionary<Position, List<int>>();
-        for (var i = 0; i < Input.Length; i++)
+        for (var i = 0; i < InputAsStrings.Length; i++)
         {
-            var       line          = Input[i];
+            var       line          = InputAsStrings[i];
             var       currentNumber = "";
             Position? adjacentGear  = null;
             for (var j = 0; j < line.Length; j++)
@@ -99,13 +103,13 @@ public class Aoc3 : IAoc<int, int>
 
     private Position? FindAdjacentGear(int i, int j)
     {
-        var notLowerEdge = i + 1 < Input.Length;
+        var notLowerEdge = i + 1 < InputAsStrings.Length;
         var notUpperEdge = i - 1 > 0;
         var notleftEdge  = j - 1 > 0;
-        var notRightEdge = j + 1 < Input[i].Length;
+        var notRightEdge = j + 1 < InputAsStrings[i].Length;
         if (notleftEdge)
         {
-            if (Input[i][j - 1] == '*')
+            if (InputAsStrings[i][j - 1] == '*')
             {
                 return new Position() { X = j - 1, Y = i };
             }
@@ -113,7 +117,7 @@ public class Aoc3 : IAoc<int, int>
 
         if (notRightEdge)
         {
-            if (Input[i][j + 1] == '*')
+            if (InputAsStrings[i][j + 1] == '*')
             {
                 return new Position() { X = j + 1, Y = i };
             }
@@ -121,14 +125,14 @@ public class Aoc3 : IAoc<int, int>
 
         if (notLowerEdge)
         {
-            if (Input[i + 1][j] == '*')
+            if (InputAsStrings[i + 1][j] == '*')
             {
                 return new Position() { X = j, Y = i + 1 };
             }
 
             if (notleftEdge)
             {
-                if (Input[i + 1][j - 1] == '*')
+                if (InputAsStrings[i + 1][j - 1] == '*')
                 {
                     return new Position() { X = j - 1, Y = i + 1 };
                 }
@@ -136,7 +140,7 @@ public class Aoc3 : IAoc<int, int>
 
             if (notRightEdge)
             {
-                if (Input[i + 1][j + 1] == '*')
+                if (InputAsStrings[i + 1][j + 1] == '*')
                 {
                     return new Position() { X = j + 1, Y = i + 1 };
                 }
@@ -145,14 +149,14 @@ public class Aoc3 : IAoc<int, int>
 
         if (notUpperEdge)
         {
-            if (Input[i - 1][j] == '*')
+            if (InputAsStrings[i - 1][j] == '*')
             {
                 return new Position() { X = j, Y = i - 1 };
             }
 
             if (notleftEdge)
             {
-                if (Input[i - 1][j - 1] == '*')
+                if (InputAsStrings[i - 1][j - 1] == '*')
                 {
                     return new Position() { X = j - 1, Y = i - 1 };
                 }
@@ -160,7 +164,7 @@ public class Aoc3 : IAoc<int, int>
 
             if (notRightEdge)
             {
-                if (Input[i - 1][j + 1] == '*')
+                if (InputAsStrings[i - 1][j + 1] == '*')
                 {
                     return new Position() { X = j + 1, Y = i - 1 };
                 }
@@ -172,13 +176,13 @@ public class Aoc3 : IAoc<int, int>
 
     private bool IsAdjacentToSymbol(int i, int j)
     {
-        var notLowerEdge = i + 1 < Input.Length;
+        var notLowerEdge = i + 1 < InputAsStrings.Length;
         var notUpperEdge = i - 1 > 0;
         var notleftEdge  = j - 1 > 0;
-        var notRightEdge = j + 1 < Input[i].Length;
+        var notRightEdge = j + 1 < InputAsStrings[i].Length;
         if (notleftEdge)
         {
-            if (Input[i][j - 1].IsSymbol() && Input[i][j - 1] != '.')
+            if (InputAsStrings[i][j - 1].IsSymbol() && InputAsStrings[i][j - 1] != '.')
             {
                 return true;
             }
@@ -186,7 +190,7 @@ public class Aoc3 : IAoc<int, int>
 
         if (notRightEdge)
         {
-            if (Input[i][j + 1].IsSymbol() && Input[i][j + 1] != '.')
+            if (InputAsStrings[i][j + 1].IsSymbol() && InputAsStrings[i][j + 1] != '.')
             {
                 return true;
             }
@@ -194,14 +198,14 @@ public class Aoc3 : IAoc<int, int>
 
         if (notLowerEdge)
         {
-            if (Input[i + 1][j].IsSymbol() && Input[i + 1][j] != '.')
+            if (InputAsStrings[i + 1][j].IsSymbol() && InputAsStrings[i + 1][j] != '.')
             {
                 return true;
             }
 
             if (notleftEdge)
             {
-                if (Input[i + 1][j - 1].IsSymbol() && Input[i + 1][j - 1] != '.')
+                if (InputAsStrings[i + 1][j - 1].IsSymbol() && InputAsStrings[i + 1][j - 1] != '.')
                 {
                     return true;
                 }
@@ -209,7 +213,7 @@ public class Aoc3 : IAoc<int, int>
 
             if (notRightEdge)
             {
-                if (Input[i + 1][j + 1].IsSymbol() && Input[i + 1][j + 1] != '.')
+                if (InputAsStrings[i + 1][j + 1].IsSymbol() && InputAsStrings[i + 1][j + 1] != '.')
                 {
                     return true;
                 }
@@ -218,14 +222,14 @@ public class Aoc3 : IAoc<int, int>
 
         if (notUpperEdge)
         {
-            if (Input[i - 1][j].IsSymbol() && Input[i - 1][j] != '.')
+            if (InputAsStrings[i - 1][j].IsSymbol() && InputAsStrings[i - 1][j] != '.')
             {
                 return true;
             }
 
             if (notleftEdge)
             {
-                if (Input[i - 1][j - 1].IsSymbol() && Input[i - 1][j - 1] != '.')
+                if (InputAsStrings[i - 1][j - 1].IsSymbol() && InputAsStrings[i - 1][j - 1] != '.')
                 {
                     return true;
                 }
@@ -233,7 +237,7 @@ public class Aoc3 : IAoc<int, int>
 
             if (notRightEdge)
             {
-                if (Input[i - 1][j + 1].IsSymbol() && Input[i - 1][j + 1] != '.')
+                if (InputAsStrings[i - 1][j + 1].IsSymbol() && InputAsStrings[i - 1][j + 1] != '.')
                 {
                     return true;
                 }

@@ -3,16 +3,9 @@ using Implementations.Helpers.Enums;
 
 namespace Implementations._2024._04;
 
-public class Aoc202404 : IAoc<long, long>
+public class Aoc202404(char[][] input) : IAoc<long, long>(input)
 {
-    public Aoc202404()
-    {
-        Input = File.ReadAllLines("2024/04/Input.txt");
-    }
-
-    public string[] Input { get; set; }
-
-    public long SolvePart1()
+    public override long SolvePart1()
     {
         var word      = "XMAS";
         var wordCount = 0;
@@ -90,7 +83,7 @@ public class Aoc202404 : IAoc<long, long>
     }
 
 
-    public long SolvePart2()
+    public override long SolvePart2()
     {
         var words      = new[] { "MAS", "SAM" };
         var crossCount = 0;

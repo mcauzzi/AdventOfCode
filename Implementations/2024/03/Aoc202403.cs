@@ -3,19 +3,12 @@ using Implementations.Helpers;
 
 namespace Implementations._2024._03;
 
-public partial class Aoc202403 : IAoc<long, long>
+public partial class Aoc202403(char[][] input) : IAoc<long, long>(input)
 {
-    public Aoc202403()
-    {
-        Input = File.ReadAllLines("2024/03/Input.txt");
-    }
-
-    public string[] Input { get; set; }
-
-    public long SolvePart1()
+    public override long SolvePart1()
     {
         var sumMuls = 0L;
-        foreach (var line in Input)
+        foreach (var line in Input.Select(x=>new string(x)))
         {
             var regexMatch = Part1Regex().Matches(line);
             foreach (Match match in regexMatch)
@@ -29,11 +22,11 @@ public partial class Aoc202403 : IAoc<long, long>
         return sumMuls;
     }
 
-    public long SolvePart2()
+    public override long SolvePart2()
     {
         var sumMuls = 0L;
         var enabled = true;
-        foreach (var line in Input)
+        foreach (var line in Input.Select(x=>new string(x)))
         {
             var regexMatch = Part2Regex().Matches(line);
             foreach (Match match in regexMatch)
