@@ -1,11 +1,26 @@
-﻿namespace Implementations._2023.Aoc1;
+using Implementations.Helpers;
 
-public class Aoc1
+namespace Implementations._2023.Aoc1;
+
+public class Aoc1 : IAoc<int, long>
 {
-    public int Run()
+    private string[] Input { get; }
+
+    public Aoc1(string[] input)
+    {
+        Input = input;
+    }
+
+    public int SolvePart1()
     {
         var res = 0;
+        res += Input.Select(GetLineNumber).Sum();
+        return res;
+    }
 
+    public long SolvePart2()
+    {
+        var res = 0L;
         res += Input.Select(GetLineNumber).Sum();
         return res;
     }
@@ -56,8 +71,6 @@ public class Aoc1
             }
         } while (lastIndex > 0);
     }
-
-    private string[] Input { get; init; } = File.ReadAllLines("./Aoc1/Input.txt");
 
     private enum Digits
     {
