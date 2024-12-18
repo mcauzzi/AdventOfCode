@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Diagnostics;
-using AdventOfCode;
-using Aoc2024._01;
+using Implementations;
+using Implementations.Helpers;
 
 class Program
 {
@@ -11,7 +11,7 @@ class Program
         while (true)
         {
             Console.WriteLine("Select a year:");
-            var years = solutions.Keys.Orderby(y => y).ToList();
+            var years = solutions.Keys.OrderBy(y => y).ToList();
             for (int i = 0; i < years.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {years[i]}");
@@ -61,14 +61,15 @@ class Program
     static Dictionary<int, Dictionary<int, Type>> LoadSolutions()
     {
         var solutions = new Dictionary<int, Dictionary<int, Type>>();
-        var assemblies = new[] { Assembly.GetExecutingAssembly(), Assembly.Load("AdventOfCode") };
+        var assemblies = new[] { Assembly.GetExecutingAssembly(), Assembly.Load("Implementations") };
 
         foreach (var assembly in assemblies)
         {
             var types = assembly.GetTypes().Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IAoc<,>)));
             foreach (var type in types)
             {
-                var year = int.Parse(type.Namespace?.Split('.').Last().Substring(0, 4) ?? "0");
+                Console.WriteLine(type.Namespace);
+                var year = int.Parse(type.Namespace?.Split('.', StringSplitOptions.RemoveEmptyEntries)[1].Replace("_","").Substring(0, 4) ?? "0");
                 var day = int.Parse(type.Name.Substring(3, type.Name.Length - 3));
 
                 if (!solutions.ContainsKey(year))
@@ -95,8 +96,8 @@ class Program
         try
         {
             var solutionInstance = Activator.CreateInstance(solutionType);
-            var runFirstPartMethod = solutionType.GetMethod("RunFirstPart");
-            var runSecondPartMethod = solutionType.GetMethod("RunSecondPart");
+            var runFirstPartMethod = solutionType.GetMethod("SolvePart1");
+            var runSecondPartMethod = solutionType.GetMethod("SolvePart2");
 
             if (runFirstPartMethod != null && runSecondPartMethod != null)
             {
@@ -117,7 +118,7 @@ class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"An error occurred while executing the solution: {ex.Message}");
+            Console.WriteLine($"An error occurred while executing the solution: {ex.Message}, {ex.InnerException?.Message}");
         }
     }
 }
