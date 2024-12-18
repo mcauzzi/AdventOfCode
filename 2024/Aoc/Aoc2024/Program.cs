@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Diagnostics;
 using AdventOfCode;
 using Aoc2024._01;
 
@@ -10,7 +11,7 @@ class Program
         while (true)
         {
             Console.WriteLine("Select a year:");
-            var years = solutions.Keys.OrderBy(y => y).ToList();
+            var years = solutions.Keys.Orderby(y => y).ToList();
             for (int i = 0; i < years.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {years[i]}");
@@ -99,11 +100,15 @@ class Program
 
             if (runFirstPartMethod != null && runSecondPartMethod != null)
             {
+                var stopwatch = Stopwatch.StartNew();
                 var firstPartResult = runFirstPartMethod.Invoke(solutionInstance, null);
-                var secondPartResult = runSecondPartMethod.Invoke(solutionInstance, null);
+                stopwatch.Stop();
+                Console.WriteLine($"Part 1: {firstPartResult} (Execution Time: {stopwatch.ElapsedMilliseconds} ms)");
 
-                Console.WriteLine($"Part 1: {firstPartResult}");
-                Console.WriteLine($"Part 2: {secondPartResult}");
+                stopwatch.Restart();
+                var secondPartResult = runSecondPartMethod.Invoke(solutionInstance, null);
+                stopwatch.Stop();
+                Console.WriteLine($"Part 2: {secondPartResult} (Execution Time: {stopwatch.ElapsedMilliseconds} ms)");
             }
             else
             {
