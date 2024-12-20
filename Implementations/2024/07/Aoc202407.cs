@@ -2,7 +2,7 @@ using Implementations.Helpers;
 
 namespace Implementations._2024._07;
 
-public class Aoc202407 : IAoc<long, long>
+public class Aoc202407 : BaseAoc<long, long>
 {
     public Aoc202407(char[][] input):base(input)
     {

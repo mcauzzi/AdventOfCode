@@ -3,7 +3,7 @@ using Implementations.Helpers;
 
 namespace Implementations._2024._03;
 
-public partial class Aoc202403(char[][] input) : IAoc<long, long>(input)
+public partial class Aoc202403(char[][] input) : BaseAoc<long, long>(input)
 {
     public override long SolvePart1()
     {

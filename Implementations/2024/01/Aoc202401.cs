@@ -2,7 +2,7 @@ using Implementations.Helpers;
 
 namespace Implementations._2024._01;
 
-public class Aoc202401(char[][] input) :IAoc<int,long>(input)
+public class Aoc202401(char[][] input) :BaseAoc<int,long>(input)
 {
     public List<string> InputLines { get; set; } = File.ReadLines("2024/01/Input.txt").ToList();
 

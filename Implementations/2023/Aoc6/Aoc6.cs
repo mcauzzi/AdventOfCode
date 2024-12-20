@@ -1,8 +1,8 @@
 using Implementations.Helpers;
 
-namespace Implementations._2023.Aoc6;
+namespace Implementations._2023._06;
 
-public class Aoc6 :IAoc<long,long>
+public class Aoc6 :BaseAoc<long,long>
 {
     public Aoc6(char[][] input) : base(input)
     {

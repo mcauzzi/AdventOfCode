@@ -1,6 +1,6 @@
 using Implementations.Helpers;
 
-namespace Implementations._2023.Aoc7;
+namespace Implementations._2023._07;
 
 public class Hand : IComparable<Hand>, IComparable
 {

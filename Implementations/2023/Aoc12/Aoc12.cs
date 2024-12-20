@@ -1,8 +1,8 @@
 using Implementations.Helpers;
 
-namespace Implementations._2023.Aoc12;
+namespace Implementations._2023._12;
 
-public class Aoc12 : IAoc<long, long>
+public class Aoc12 : BaseAoc<long, long>
 {
     public Aoc12(char[][] input) : base(input)
     {

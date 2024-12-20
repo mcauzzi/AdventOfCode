@@ -2,11 +2,6 @@ namespace Implementations.Helpers;
 
 public static class FileLoader
 {
-    public static string[] LoadFile(string path)
-    {
-        return File.ReadAllLines(path);
-    }
-
     public static string[] DownloadFile(string url, string sessionCookie)
     {
         using var client = new HttpClient();
@@ -21,7 +16,7 @@ public static class FileLoader
     {
         if (File.Exists(path))
         {
-            return LoadFile(path);
+            return File.ReadAllLines(path);
         }
 
         var sessionCookie = GetSessionCookie();

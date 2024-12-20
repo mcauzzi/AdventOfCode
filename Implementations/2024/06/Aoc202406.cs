@@ -5,7 +5,7 @@ namespace Implementations._2024._06;
 
 using Vector = (Coordinate Position, Directions Direction);
 
-public class Aoc202406(char[][] input) : IAoc<int, int>(input)
+public class Aoc202406(char[][] input) : BaseAoc<int, int>(input)
 {
     public override int SolvePart1()
     {

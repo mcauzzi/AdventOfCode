@@ -3,3 +3,6 @@
 **/.idea/
 *.user
 global.json
+config.txt
+Input.txt
+Test.txt

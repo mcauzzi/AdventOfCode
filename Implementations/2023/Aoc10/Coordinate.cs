@@ -1,4 +1,4 @@
-namespace Implementations._2023.Aoc10;
+namespace Implementations._2023._10;
 
 public class Coordinate : IEquatable<Coordinate>
 {
