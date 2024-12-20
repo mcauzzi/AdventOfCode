@@ -1,4 +1,4 @@
-namespace Implementations._2023.Aoc8;
+namespace Implementations._2023._08;
 
 public class Instructions
 {

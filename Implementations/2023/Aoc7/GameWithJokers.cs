@@ -1,4 +1,4 @@
-namespace Implementations._2023.Aoc7;
+namespace Implementations._2023._07;
 
 public class GameWithJokers : Game
 {

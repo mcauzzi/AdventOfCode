@@ -3,7 +3,7 @@ using Implementations.Helpers.Enums;
 
 namespace Implementations._2024._04;
 
-public class Aoc202404(char[][] input) : IAoc<long, long>(input)
+public class Aoc202404(char[][] input) : BaseAoc<long, long>(input)
 {
     public override long SolvePart1()
     {

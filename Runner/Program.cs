@@ -29,7 +29,7 @@ internal class Program
                 var latestSolution = GetLatestSolution(solutions);
                 if (latestSolution != null)
                 {
-                    ExecuteSolution(latestSolution);
+                    ExecuteSolution(latestSolution, years.Last(), solutions[years.Last()].Keys.Max());
                 }
                 else
                 {
@@ -65,12 +65,13 @@ internal class Program
 
         foreach (var assembly in assemblies)
         {
-            var types = assembly.GetTypes().Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IAoc<,>)));
+            var types = assembly.GetTypes().Where(t => t.BaseType?.IsGenericType==true && t.BaseType?.GetGenericTypeDefinition()==typeof(BaseAoc<,>));
             foreach (var type in types)
             {
-                Console.WriteLine(type.Namespace);
-                var year = int.Parse(type.Namespace?.Split('.', StringSplitOptions.RemoveEmptyEntries)[1].Replace("_","").Substring(0, 4) ?? "0");
-                var day = int.Parse(type.Name.Substring(3, type.Name.Length - 3));
+                Console.WriteLine(type.FullName);
+                var splitNamespaceName = type.Namespace?.Replace("_","").Split('.', StringSplitOptions.RemoveEmptyEntries);
+                var year               = int.Parse(splitNamespaceName?[1][..4] ?? "0");
+                var day                = int.Parse(splitNamespaceName?[2][..2] ?? "0");
 
                 if (!solutions.ContainsKey(year))
                 {
@@ -97,7 +98,7 @@ internal class Program
         {
             var inputFilePath = $"Implementations/{year}/Inputs/Aoc{day}.txt";
             var inputUrl = $"https://adventofcode.com/{year}/day/{day}/input";
-            var input = FileLoader.GetInput(inputFilePath, inputUrl);
+            var input = FileLoader.GetInput(inputFilePath, inputUrl).Select(x=>x.ToCharArray()).ToArray();
 
             var solutionInstance = Activator.CreateInstance(solutionType, new object[] { input });
             var runFirstPartMethod = solutionType.GetMethod("SolvePart1");

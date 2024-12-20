@@ -1,8 +1,8 @@
 using Implementations.Helpers;
 
-namespace Implementations._2023.Aoc11;
+namespace Implementations._2023._11;
 
-public class Aoc11(char[][] input) : IAoc<double, double>(input)
+public class Aoc11(char[][] input) : BaseAoc<double, double>(input)
 {
    
 

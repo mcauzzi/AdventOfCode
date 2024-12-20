@@ -1,4 +1,4 @@
-namespace Implementations._2023.Aoc2;
+namespace Implementations._2023._02;
 
 public class Game
 {

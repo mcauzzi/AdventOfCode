@@ -11,4 +11,11 @@
       <ProjectReference Include="..\Implementations\Implementations.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="config.txt" />
+      <Content Include="config.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>
