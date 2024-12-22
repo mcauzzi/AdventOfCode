@@ -19,4 +19,13 @@ public record Coordinate(int X, int Y)
              { Directions.LEFT, new(-1, 0) },
              { Directions.RIGHT, new(1, 0) }
          }).ToImmutableDictionary();
+
+    public bool Adjacent(Coordinate other)
+    {
+        if(Math.Abs(X-other.X)==1 && Y==other.Y)
+        {
+            return true;
+        }
+        return Math.Abs(Y-other.Y)==1 && X==other.X;
+    }
 }
