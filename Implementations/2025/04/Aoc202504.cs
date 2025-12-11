@@ -12,20 +12,20 @@ public class Aoc202504(char[][] input) :BaseAoc<long,long>(input)
         return rowResults.Sum();
     }
 
-    private int GetAccessiblePapers(int rowIndex, char[][] row, bool remove = false)
+    private int GetAccessiblePapers(int rowIndex, char[][] matrix, bool remove = false)
     {
         var result = 0;
-        for (int col = 0; col < row[rowIndex].Length; col++)
+        for (int col = 0; col < matrix[rowIndex].Length; col++)
         {
-            if (row[rowIndex][col] == '.')
+            if (matrix[rowIndex][col] == '.')
             {
                 continue;
             }
-            var adjacentItems = row.GetAdjacentItemsInMatrix(rowIndex, col);
+            var adjacentItems = matrix.GetAdjacentItemsInMatrix(rowIndex, col);
             if (adjacentItems.Count(x => x.Item2 == '@') < 4)
             {
                 result++;
-                if (remove) row[rowIndex][col] = '.';
+                if (remove) matrix[rowIndex][col] = '.';
             }
         }
         return result;
