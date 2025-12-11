@@ -12,7 +12,7 @@ public class Aoc202504(char[][] input) :BaseAoc<long,long>(input)
         return rowResults.Sum();
     }
 
-    private int GetAccessiblePapers(int rowIndex, char[][] row)
+    private int GetAccessiblePapers(int rowIndex, char[][] row, bool remove = false)
     {
         var result = 0;
         for (int col = 0; col < row[rowIndex].Length; col++)
@@ -25,6 +25,7 @@ public class Aoc202504(char[][] input) :BaseAoc<long,long>(input)
             if (adjacentItems.Count(x => x.Item2 == '@') < 4)
             {
                 result++;
+                if (remove) row[rowIndex][col] = '.';
             }
         }
         return result;
@@ -32,6 +33,16 @@ public class Aoc202504(char[][] input) :BaseAoc<long,long>(input)
 
     public override long SolvePart2()
     {
-        throw new NotImplementedException();
+        var totalSum    = 0;
+        var rowResults  =new int[Input.Length];
+        var currIterSum = 0;
+        do
+        {
+            Parallel.For(0, Input.Length, (row) => { rowResults[row] = GetAccessiblePapers(row, Input,remove:true); });
+            currIterSum = rowResults.Sum();
+            totalSum += currIterSum;
+        } while (currIterSum > 0);
+
+        return totalSum;
     }
 }
